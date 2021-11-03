@@ -2,7 +2,7 @@ package emg.manning.liveproject.service;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class TransactionServiceTest {
 
@@ -11,6 +11,6 @@ class TransactionServiceTest {
     @Test
     void findAllByAccountNumber() {
         final Integer accountNumber = 0;
-        assertEquals(5, transactionService.findAllByAccountNumber(accountNumber).size());
+        assertThat(transactionService.findAllByAccountNumber(accountNumber).size()).isPositive();
     }
 }
