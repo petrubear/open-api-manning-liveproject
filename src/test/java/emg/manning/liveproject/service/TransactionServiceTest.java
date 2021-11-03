@@ -1,38 +1,38 @@
 package emg.manning.liveproject.service;
 
-import emg.manning.liveproject.model.Transaction;
-import emg.manning.liveproject.repository.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import java.util.Date;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
 
+@SpringBootTest
 class TransactionServiceTest {
 
-    @Mock
-    private TransactionRepository transactionRepository;
+//    @Mock
+//    private TransactionRepository transactionRepository;
+
+    @Autowired
+    private TransactionService transactionService;
+
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+//        MockitoAnnotations.openMocks(this);
     }
 
     @Test
+//    @Sql(scripts = {"classpath:init_db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void findAllByAccountNumber() {
-        when(transactionRepository.findByAccountNumber(anyInt())).thenReturn(transactions());
-        final var accountNumber = 0;
-        var transactionService = new TransactionService(transactionRepository);
+//        when(transactionRepository.findByAccountNumber(anyInt())).thenReturn(transactions());
+//        var transactionService = new TransactionService(transactionRepository);
+        final var accountNumber = 123456;
         assertThat(transactionService.findAllByAccountNumber(accountNumber).size()).isPositive();
     }
 
-    private List<Transaction> transactions() {
+    /*private List<Transaction> transactions() {
         return List.of(
             Transaction
                 .builder()
@@ -45,5 +45,5 @@ class TransactionServiceTest {
                 .merchantLogo("amazon.png")
                 .build()
         );
-    }
+    }*/
 }
