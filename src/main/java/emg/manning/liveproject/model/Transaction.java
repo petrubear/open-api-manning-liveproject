@@ -3,16 +3,16 @@ package emg.manning.liveproject.model;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Builder
 public class Transaction {
     private String type;
-    private LocalDate date;
-    private String accountNumber;
+    private Date date;
+    private Integer accountNumber;
     private String currency;
-    private double amount;
+    private Double amount;
     private String merchantName;
     private String merchantLogo;
 }

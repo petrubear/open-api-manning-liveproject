@@ -10,7 +10,7 @@ class TransactionServiceTest {
 
     @Test
     void findAllByAccountNumber() {
-        final String accountNumber = "";
+        final Integer accountNumber = 0;
         assertEquals(5, transactionService.findAllByAccountNumber(accountNumber).size());
     }
 }

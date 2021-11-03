@@ -13,13 +13,13 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    public TransactionController(TransactionService transactionService) {
+    public TransactionController(final TransactionService transactionService) {
         this.transactionService = transactionService;
     }
 
 
     @GetMapping("/transactions/{accountNumber}")
-    public List<Transaction> getTransactions(@PathVariable String accountNumber) {
+    public List<Transaction> getTransactions(@PathVariable final Integer accountNumber) {
         return transactionService.findAllByAccountNumber(accountNumber);
     }
 }
