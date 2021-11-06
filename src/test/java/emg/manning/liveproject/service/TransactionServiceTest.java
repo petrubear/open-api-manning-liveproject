@@ -27,7 +27,7 @@ class TransactionServiceTest {
     private TransactionService transactionService;
 
     @Test
-    void testTransactionCount() {
+    void testTransactionCount() throws Exception {
         Mockito.when(transactionApiClient.findAllByAccountNumber(any())).thenReturn(List.of(new Transaction()));
 
         assertThat(transactionService.findAllByAccountNumber(123456).size()).isPositive();

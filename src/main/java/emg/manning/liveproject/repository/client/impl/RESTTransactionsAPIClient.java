@@ -24,12 +24,12 @@ public class RESTTransactionsAPIClient implements TransactionApiClient {
 
 
     @Override
-    public List<Transaction> findAllByAccountNumber(final Integer accountNumber) {
+    public List<Transaction> findAllByAccountNumber(final Integer accountNumber) throws Exception {
         final var obTransactions = retrieveTransactionsInfo(accountNumber);
         return obTransactions.stream().map(adapter::adapt).collect(Collectors.toList());
     }
 
-    private List<OBTransaction6> retrieveTransactionsInfo(final Integer accountNumber) {
+    private List<OBTransaction6> retrieveTransactionsInfo(final Integer accountNumber) throws Exception {
 
         try {
             var result = webClient.get()
@@ -44,6 +44,7 @@ public class RESTTransactionsAPIClient implements TransactionApiClient {
 
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
+            throw ex;
         }
         return List.of();
     }

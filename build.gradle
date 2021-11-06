@@ -40,6 +40,7 @@ dependencies {
     implementation "org.openapitools:jackson-databind-nullable:$openApiToolsVersion"
     implementation "jakarta.validation:jakarta.validation-api"
     compileOnly "io.github.resilience4j:resilience4j-circuitbreaker:${resilience4jVersion}"
+    compileOnly "io.github.resilience4j:resilience4j-circularbuffer:${resilience4jVersion}"
     compileOnly "io.github.resilience4j:resilience4j-spring-boot2:${resilience4jVersion}"
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
