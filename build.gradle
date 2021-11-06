@@ -23,6 +23,7 @@ ext {
     mariadbClientVersion = '2.7.4'
     springfoxVersion = '3.0.0'
     openApiToolsVersion = '0.2.1'
+    resilience4jVersion = '1.7.1'
 }
 
 repositories {
@@ -32,11 +33,14 @@ repositories {
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation "org.mariadb.jdbc:mariadb-java-client:$mariadbClientVersion"
     implementation "io.springfox:springfox-swagger2:$springfoxVersion"
     implementation "io.springfox:springfox-swagger-ui:$springfoxVersion"
     implementation "org.openapitools:jackson-databind-nullable:$openApiToolsVersion"
     implementation "jakarta.validation:jakarta.validation-api"
+    compileOnly "io.github.resilience4j:resilience4j-circuitbreaker:${resilience4jVersion}"
+    compileOnly "io.github.resilience4j:resilience4j-spring-boot2:${resilience4jVersion}"
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
@@ -65,7 +69,7 @@ tasks.register('generateModels', Copy) {
 }
 
 task cleanGenerated(type: Delete) {
-    delete "$rootDir/src/main/java/com/acme/banking/"
+    delete "$rootDir/src/main/java/com/"
     followSymlinks = true
 }
 

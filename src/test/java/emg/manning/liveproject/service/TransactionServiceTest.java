@@ -1,49 +1,35 @@
 package emg.manning.liveproject.service;
 
-import org.junit.jupiter.api.BeforeEach;
+import emg.manning.liveproject.BetterBankingApplication;
+import emg.manning.liveproject.model.Transaction;
+import emg.manning.liveproject.repository.MerchantDetailsRepository;
+import emg.manning.liveproject.repository.client.TransactionApiClient;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 
-@SpringBootTest
+@SpringBootTest(classes = {BetterBankingApplication.class})
 class TransactionServiceTest {
 
-//    @Mock
-//    private TransactionRepository transactionRepository;
+    @Mock
+    private TransactionApiClient transactionApiClient;
+    @Mock
+    private MerchantDetailsRepository merchantDetailsRepository;
 
-    @Autowired
+    @InjectMocks
     private TransactionService transactionService;
 
-
-    @BeforeEach
-    public void setUp() {
-//        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
-//    @Sql(scripts = {"classpath:init_db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    void findAllByAccountNumber() {
-//        when(transactionRepository.findByAccountNumber(anyInt())).thenReturn(transactions());
-//        var transactionService = new TransactionService(transactionRepository);
-        final var accountNumber = 123456;
-        assertThat(transactionService.findAllByAccountNumber(accountNumber).size()).isPositive();
-    }
+    void testTransactionCount() {
+        Mockito.when(transactionApiClient.findAllByAccountNumber(any())).thenReturn(List.of(new Transaction()));
 
-    /*private List<Transaction> transactions() {
-        return List.of(
-            Transaction
-                .builder()
-                .type("credit")
-                .date(new Date())
-                .accountNumber(0)
-                .currency("USD")
-                .amount(10.0)
-                .merchantName("Amazon")
-                .merchantLogo("amazon.png")
-                .build()
-        );
-    }*/
+        assertThat(transactionService.findAllByAccountNumber(123456).size()).isPositive();
+    }
 }

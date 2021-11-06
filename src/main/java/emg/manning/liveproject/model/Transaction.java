@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @Table(name = "transactions")
 public class Transaction {
     @Id
