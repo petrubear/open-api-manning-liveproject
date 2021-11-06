@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id "org.openapi.generator" version "5.3.0"
 }
 
 group = 'emg.manning'
@@ -20,6 +21,8 @@ ext {
     testContainersVersion = '1.16.2'
     restAssuredVersion = '4.4.0'
     mariadbClientVersion = '2.7.4'
+    springfoxVersion = '3.0.0'
+    openApiToolsVersion = '0.2.1'
 }
 
 repositories {
@@ -30,13 +33,44 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
     implementation "org.mariadb.jdbc:mariadb-java-client:$mariadbClientVersion"
+    implementation "io.springfox:springfox-swagger2:$springfoxVersion"
+    implementation "io.springfox:springfox-swagger-ui:$springfoxVersion"
+    implementation "org.openapitools:jackson-databind-nullable:$openApiToolsVersion"
+    implementation "jakarta.validation:jakarta.validation-api"
+
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     testImplementation "io.rest-assured:spring-mock-mvc:$restAssuredVersion"
     testImplementation "org.testcontainers:testcontainers:$testContainersVersion"
     testImplementation "org.testcontainers:junit-jupiter:$testContainersVersion"
     testImplementation "org.testcontainers:mariadb:$testContainersVersion"
+}
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$rootDir/open-api/open-banking.yaml".toString()
+    outputDir = "$buildDir/generated".toString()
+    apiPackage = "com.acme.banking.api"
+    invokerPackage = "com.acme.banking.invoker"
+    modelPackage = "com.acme.banking.model"
+}
+
+tasks.register('generateModels', Copy) {
+    dependsOn "openApiGenerate"
+    from layout.buildDirectory.dir("generated/src/main/java/com/acme/banking/model")
+    include "*.java"
+    into "$rootDir/src/main/java/com/acme/banking/model"
+}
+
+task cleanGenerated(type: Delete) {
+    delete "$rootDir/src/main/java/com/acme/banking/"
+    followSymlinks = true
+}
+
+clean {
+    dependsOn "cleanGenerated"
 }
 
 test {
