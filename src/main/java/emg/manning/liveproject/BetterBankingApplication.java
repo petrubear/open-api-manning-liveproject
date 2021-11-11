@@ -42,7 +42,7 @@ public class BetterBankingApplication {
             transactionRepository.save(Transaction.builder().date(new Date())
                 .merchantName("Acme")
                 .amount(1090.0)
-                .accountNumber(1234567)
+                .accountNumber(1234568)
                 .currency("USD").type("debit").merchantLogo("acme-logo.png").build());
         };
     }

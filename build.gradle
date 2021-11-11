@@ -24,16 +24,24 @@ ext {
     springfoxVersion = '3.0.0'
     openApiToolsVersion = '0.2.1'
     resilience4jVersion = '1.7.1'
+    keycloakVersion = '15.0.2'
 }
 
 repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.keycloak.bom:keycloak-adapter-bom:$keycloakVersion"
+    }
+}
+
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation "org.springframework.boot:spring-boot-starter-webflux:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
     implementation "org.mariadb.jdbc:mariadb-java-client:$mariadbClientVersion"
     implementation "io.springfox:springfox-swagger2:$springfoxVersion"
     implementation "io.springfox:springfox-swagger-ui:$springfoxVersion"
@@ -42,6 +50,7 @@ dependencies {
     compileOnly "io.github.resilience4j:resilience4j-circuitbreaker:${resilience4jVersion}"
     compileOnly "io.github.resilience4j:resilience4j-circularbuffer:${resilience4jVersion}"
     compileOnly "io.github.resilience4j:resilience4j-spring-boot2:${resilience4jVersion}"
+    compileOnly "org.keycloak:keycloak-spring-boot-starter:$keycloakVersion"
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
