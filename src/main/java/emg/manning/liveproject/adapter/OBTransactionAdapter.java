@@ -8,19 +8,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class OBTransactionAdapter {
-    /*
-    public Transaction adapt(OBTransaction6 obTransaction) {
-        return Transaction.builder()
-            .accountNumber(Integer.valueOf(obTransaction.getAccountId()))
-            .type(obTransaction.getCreditDebitIndicator().toString())
-            .currency(obTransaction.getCurrencyExchange().getUnitCurrency())
-            .amount(Double.parseDouble(obTransaction.getAmount().getAmount()) *
-                obTransaction.getCurrencyExchange().getExchangeRate().doubleValue())
-            .merchantName(obTransaction.getMerchantDetails().getMerchantName())
-            .date(new Date(obTransaction.getValueDateTime().toInstant().toEpochMilli()))
-            .build();
-    }
-     */
+
     public Transaction adapt(final OBTransaction6 transaction6) {
         return transactionFunction.apply(transaction6);
     }

@@ -15,7 +15,7 @@ import java.util.Date;
 @SpringBootApplication
 public class BetterBankingApplication {
 
-    @Value("${transaction.service.url}")
+    @Value("${testnet.service.url}")
     private String baseUrl;
 
     @Bean
