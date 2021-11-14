@@ -10,6 +10,7 @@ import java.util.Date;
 @ToString
 @Builder
 @Entity
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @Table(name = "transactions")
