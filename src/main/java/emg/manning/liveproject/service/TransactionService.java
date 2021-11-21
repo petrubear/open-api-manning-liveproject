@@ -8,6 +8,8 @@ import emg.manning.liveproject.repository.client.TransactionApiClient;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,7 @@ public class TransactionService {
 
     @CircuitBreaker(name = "transactionService", fallbackMethod = "findAllByAccountNumberFallback")
     @PostFilter("hasAuthority(filterObject.accountNumber)")
+    @Cacheable(cacheNames = "transactions")
     public List<Transaction> findAllByAccountNumber(final Integer accountNumber) {
         return transactionRepository.findByAccountNumber(accountNumber);
     }
@@ -44,6 +47,7 @@ public class TransactionService {
     }
 
 
+    @CachePut(value = "transactions")
     public List<Transaction> pollByAccountNumber(final Integer accountNumber) {
         List<Transaction> serviceTransactions = null;
         try {
